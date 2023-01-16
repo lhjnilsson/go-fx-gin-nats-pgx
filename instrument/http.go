@@ -84,7 +84,7 @@ func (r *Routes) AddInstrument(c *gin.Context) {
 //	@Summary	Remove an Instrument
 //	@Tags		instrument
 //	@Produce	json
-//	@Param		symbol	path		string	true	"Instrument Symbol"
+//	@Param		symbol	path	string	true	"Instrument Symbol"
 //	@Router		/instruments/{symbol} [delete]
 func (r *Routes) RemoveInstrument(c *gin.Context) {
 	err := r.instrumentStorage.Remove(c, c.Param("symbol"))

@@ -20,9 +20,9 @@ import (
 	"go.uber.org/zap"
 )
 
-// @title			Go FX Gin NATS PGX
-// @version		1.0
-// @host		localhost:8080
+//	@title		Go FX Gin NATS PGX
+//	@version	1.0
+//	@host		localhost:8080
 func NewHTTPServer(lc fx.Lifecycle, log *zap.Logger, config *config.ApplicationConfig) *gin.Engine {
 	gin := gin.New()
 	server := &http.Server{
@@ -35,6 +35,10 @@ func NewHTTPServer(lc fx.Lifecycle, log *zap.Logger, config *config.ApplicationC
 			log.Info("Starting HTTP server")
 			go func() {
 				if err := server.ListenAndServe(); err != nil {
+					if err == http.ErrServerClosed {
+						log.Info("HTTP server stopped")
+						return
+					}
 					log.Fatal("HTTP server failed", zap.Error(err))
 				}
 			}()

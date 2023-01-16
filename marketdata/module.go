@@ -19,11 +19,6 @@ func NewMarketDataStreamer(lc fx.Lifecycle, instrumentStreams *instrument.Instru
 	if err != nil {
 		return err
 	}
-	js.AddConsumer("instrument", &nats.ConsumerConfig{
-		Durable:        "marketdata",
-		DeliverSubject: "marketdata",
-		AckPolicy:      nats.AckExplicitPolicy,
-	})
 
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
@@ -55,7 +50,7 @@ func NewMarketDataStreamer(lc fx.Lifecycle, instrumentStreams *instrument.Instru
 				if err != nil {
 					log.Error("Failed to ack message", zap.Error(err))
 				}
-			})
+			}, nats.Durable("marketdata-added"))
 			if err != nil {
 				return err
 			}
@@ -72,7 +67,7 @@ func NewMarketDataStreamer(lc fx.Lifecycle, instrumentStreams *instrument.Instru
 				if err != nil {
 					log.Error("Failed to ack message", zap.Error(err))
 				}
-			})
+			}, nats.Durable("marketdata-removed"))
 			if err != nil {
 				return err
 			}
