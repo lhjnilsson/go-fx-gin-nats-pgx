@@ -1,0 +1,166 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Go FX Gin NATS PGX",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/instruments/{symbol}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "instrument"
+                ],
+                "summary": "Get an Instrument",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Instrument Symbol",
+                        "name": "symbol",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/instrument.Instrument"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "instrument"
+                ],
+                "summary": "Add an Instrument",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Instrument Symbol",
+                        "name": "symbol",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/instrument.Instrument"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "instrument"
+                ],
+                "summary": "Remove an Instrument",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Instrument Symbol",
+                        "name": "symbol",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/marketdata/{symbol}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "marketdata"
+                ],
+                "summary": "Get OHLC data for an Instrument",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Instrument Symbol",
+                        "name": "symbol",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/marketdata.OHLC"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "instrument.Instrument": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "exchange": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "symbol": {
+                    "type": "string"
+                }
+            }
+        },
+        "marketdata.OHLC": {
+            "type": "object",
+            "properties": {
+                "close": {
+                    "type": "number"
+                },
+                "high": {
+                    "type": "number"
+                },
+                "low": {
+                    "type": "number"
+                },
+                "open": {
+                    "type": "number"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "volume": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

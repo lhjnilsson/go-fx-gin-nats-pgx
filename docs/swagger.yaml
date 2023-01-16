@@ -1,0 +1,108 @@
+definitions:
+  instrument.Instrument:
+    properties:
+      class:
+        type: string
+      exchange:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      symbol:
+        type: string
+    type: object
+  marketdata.OHLC:
+    properties:
+      close:
+        type: number
+      high:
+        type: number
+      low:
+        type: number
+      open:
+        type: number
+      timestamp:
+        type: string
+      volume:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Go FX Gin NATS PGX
+  version: "1.0"
+paths:
+  /instruments/{symbol}:
+    delete:
+      parameters:
+      - description: Instrument Symbol
+        in: path
+        name: symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Remove an Instrument
+      tags:
+      - instrument
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Instrument Symbol
+        in: path
+        name: symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instrument.Instrument'
+      summary: Get an Instrument
+      tags:
+      - instrument
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Instrument Symbol
+        in: path
+        name: symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instrument.Instrument'
+      summary: Add an Instrument
+      tags:
+      - instrument
+  /marketdata/{symbol}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Instrument Symbol
+        in: path
+        name: symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/marketdata.OHLC'
+      summary: Get OHLC data for an Instrument
+      tags:
+      - marketdata
+swagger: "2.0"
